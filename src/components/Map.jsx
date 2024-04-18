@@ -1,9 +1,18 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 import styles from "./Map.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCities } from "../contexts/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
+import Button from "./Button";
 
 function Map() {
   const navigate = useNavigate();
@@ -13,8 +22,14 @@ function Map() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
+  const {
+    isLoading: isLoadingPosition,
+    position: geolocationPosition,
+    getPosition,
+  } = useGeolocation();
+
+  const mapLat = searchParams.get("lat");
+  const mapLng = searchParams.get("lng");
 
   const flagemojiToPNG = (flag) => {
     var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
@@ -25,11 +40,34 @@ function Map() {
     );
   };
 
+  useEffect(
+    function () {
+      if (mapLat && mapLng) setMapPostion([mapLat, mapLng]);
+    },
+    [mapLat, mapLng]
+  );
+
+  useEffect(
+    function () {
+      if (geolocationPosition)
+        setMapPostion([geolocationPosition.lat, geolocationPosition.lng]);
+    },
+    [geolocationPosition]
+  );
+
   return (
     <div className={styles.mapContainer}>
+      {!geolocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "Loading..." : "Use your position"}
+        </Button>
+      )}
       <MapContainer
         center={mapPostion}
-        zoom={13}
+        // center={
+        //   mapLat && mapLng ? [Number(mapLat), Number(mapLng)] : mapPostion
+        // }
+        zoom={6}
         scrollWheelZoom={true}
         className={styles.map}
       >
@@ -48,17 +86,28 @@ function Map() {
             </Popup>
           </Marker>
         ))}
+        <ChangeCenter position={mapPostion} />
+        <DetectClick />
       </MapContainer>
     </div>
   );
 }
 
-export default Map;
-
-{
-  /* <Marker position={mapPostion}>
-  <Popup>
-    A pretty CSS3 popup. <br /> Easily customizable.
-  </Popup>
-</Marker>; */
+function ChangeCenter({ position }) {
+  const map = useMap();
+  map.setView(position);
+  return null;
 }
+
+function DetectClick() {
+  const navigate = useNavigate();
+
+  useMapEvents({
+    click: (e) => {
+      console.log(e);
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+    },
+  });
+}
+
+export default Map;
