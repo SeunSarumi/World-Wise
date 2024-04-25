@@ -14,13 +14,13 @@ import { useCities } from "../contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
 
+import { useUrlPosition } from "../hooks/useUrlPosition";
+
 function Map() {
   const navigate = useNavigate();
   const { cities } = useCities();
 
   const [mapPostion, setMapPostion] = useState([40, 0]);
-
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const {
     isLoading: isLoadingPosition,
@@ -28,9 +28,7 @@ function Map() {
     getPosition,
   } = useGeolocation();
 
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
-
+  const [mapLat, mapLng] = useUrlPosition();
   const flagemojiToPNG = (flag) => {
     var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
       .map((char) => String.fromCharCode(char - 127397).toLowerCase())
