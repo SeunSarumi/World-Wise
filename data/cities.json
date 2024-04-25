@@ -35,6 +35,66 @@
         "lng": 13.376933665713324
       },
       "id": 98443197
+    },
+    {
+      "cityName": "Ikeja",
+      "country": "Nigeria",
+      "emoji": "🇳🇬",
+      "date": "2024-04-25T20:07:17.329Z",
+      "notes": "test",
+      "position": {
+        "lat": "6.596251209374255",
+        "lng": "3.352431723318432"
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "In Salah",
+      "country": "Algeria",
+      "emoji": "🇩🇿",
+      "date": "2024-04-25T20:10:43.579Z",
+      "notes": "another test",
+      "position": {
+        "lat": "27.85635265321807",
+        "lng": "2.902310800276262"
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "Andalusia",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-04-25T20:15:13.848Z",
+      "notes": "anotherrrr test",
+      "position": {
+        "lat": "37.540739043991834",
+        "lng": "-7.137019574237386"
+      },
+      "id": 98443200
+    },
+    {
+      "cityName": "Abuja",
+      "country": "Nigeria",
+      "emoji": "🇳🇬",
+      "date": "2024-04-25T20:15:13.848Z",
+      "notes": "anotherrrr test",
+      "position": {
+        "lat": "9.08364038146373",
+        "lng": "7.58187319220189"
+      },
+      "id": 98443201
+    },
+    {
+      "cityName": "Plateau State",
+      "country": "Nigeria",
+      "emoji": "🇳🇬",
+      "date": "2024-04-25T20:19:29.256Z",
+      "notes": "",
+      "position": {
+        "lat": "8.882587387493892",
+        "lng": "9.979973004624261"
+      },
+      "id": 98443202
     }
   ]
 }
